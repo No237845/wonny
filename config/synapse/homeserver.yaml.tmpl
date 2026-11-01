@@ -65,6 +65,8 @@ oidc_providers:
     client_id: synapse
     client_secret: "${SYNAPSE_OIDC_SECRET}"
     client_auth_method: client_secret_post
+    # Keycloak exige PKCE (S256) ; sans découverte, "auto" ne l'enverrait pas.
+    pkce_method: always
     scopes: ["openid", "profile"]
     # Démo locale en HTTP ; en production, HTTPS et skip_verification: false.
     skip_verification: true
