@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block contenu %}
+<section class="carte">
+  <h1>Enrôler un agent</h1>
+  <p>Seuls les agents enrôlés ici peuvent rejoindre la messagerie. À sa première connexion,
+     l'agent doit obligatoirement configurer un second facteur (application TOTP, par exemple FreeOTP).</p>
+  <form method="post" action="/agents" class="grille">
+    <input type="hidden" name="csrf" value="{{ csrf }}">
+    <label>Prénom <input name="prenom" required></label>
+    <label>Nom <input name="nom" required></label>
+    <label>Identifiant <input name="username" required pattern="[a-z0-9][a-z0-9._\-]{1,62}" placeholder="prenom.nom"></label>
+    <label>Ministère <input name="ministere" required list="ministeres"></label>
+    <label>Fonction <input name="fonction" required></label>
+    <label>Mot de passe initial <input name="mot_de_passe" type="password" required minlength="12"></label>
+    <label class="case"><input type="checkbox" name="chef_service" value="true"> Chef de service (modération des salons)</label>
+    <button class="bouton">Enrôler</button>
+  </form>
+  <datalist id="ministeres">
+    <option>Ministère de la Transition Digitale</option>
+    <option>Ministère de la Santé</option>
+    <option>Ministère de l'Éducation nationale</option>
+    <option>Ministère de l'Économie et des Finances</option>
+  </datalist>
+</section>
+{% endblock %}

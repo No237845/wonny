@@ -1,0 +1,42 @@
+{
+	auto_https off
+	admin off
+}
+
+(securite) {
+	header {
+		X-Content-Type-Options nosniff
+		X-Frame-Options SAMEORIGIN
+		Referrer-Policy no-referrer
+		-Server
+	}
+}
+
+# API client Matrix. L'API d'administration n'est accessible qu'en interne
+# (par la console), jamais depuis l'extérieur.
+http://:8008 {
+	import securite
+	@admin path /_synapse/admin/*
+	respond @admin 403
+	reverse_proxy synapse:8008
+}
+
+# Client web Element
+http://:8080 {
+	import securite
+	reverse_proxy element:80
+}
+
+# Keycloak : seules les pages de connexion sont publiques.
+http://:8180 {
+	import securite
+	@kcadmin path /admin/*
+	respond @kcadmin 403
+	reverse_proxy keycloak:8080
+}
+
+# Console d'administration Kibaré (publiée sur 127.0.0.1 uniquement)
+http://:8090 {
+	import securite
+	reverse_proxy console:8090
+}

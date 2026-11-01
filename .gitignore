@@ -1,0 +1,13 @@
+# Document de l'appel (non redistribué)
+*.pdf
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+
+# Données locales
+*.db
+*.sqlite3
+secrets/

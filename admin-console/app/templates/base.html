@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kibaré — Console d'administration</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header class="bandeau">
+    <div class="marque"><span class="etoile">★</span> Kibaré <small>Console d'administration</small></div>
+    {% if admin %}
+    <nav>
+      <a href="/">Annuaire</a>
+      <a href="/agents/nouveau">Enrôler un agent</a>
+      <a href="/salons/nouveau">Salon classifié</a>
+      <a href="/journal">Journal d'audit</a>
+      <a href="/logout" class="discret">Déconnexion ({{ admin.username }})</a>
+    </nav>
+    {% endif %}
+  </header>
+  <main>
+    {% if flash %}<div class="flash {{ flash.kind }}">{{ flash.message }}</div>{% endif %}
+    {% block contenu %}{% endblock %}
+  </main>
+  <footer>MTDPCE — DGTD · Données et comptes fictifs de démonstration · Licence AGPL-3.0</footer>
+</body>
+</html>

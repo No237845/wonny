@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block contenu %}
+<h1>Journal d'audit</h1>
+<table>
+  <thead><tr><th>Horodatage (UTC)</th><th>Auteur</th><th>Action</th><th>Cible</th><th>Détails</th></tr></thead>
+  <tbody>
+  {% for e in entries %}
+    <tr><td>{{ e.horodatage }}</td><td>{{ e.auteur }}</td><td>{{ e.action }}</td><td><code>{{ e.cible }}</code></td><td>{{ e.details }}</td></tr>
+  {% else %}
+    <tr><td colspan="5">Aucune entrée.</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

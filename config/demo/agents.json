@@ -1,0 +1,46 @@
+{
+  "_avertissement": "Comptes ENTIÈREMENT FICTIFS destinés au jury. Aucune donnée réelle.",
+  "mot_de_passe_demo": "Kibare-Demo-2026",
+  "agents": [
+    {
+      "username": "admin.dgtd",
+      "prenom": "Admin",
+      "nom": "DGTD",
+      "ministere": "Ministère de la Transition Digitale",
+      "fonction": "Administrateur de la messagerie",
+      "roles": ["admin"]
+    },
+    {
+      "username": "awa.sawadogo",
+      "prenom": "Awa",
+      "nom": "SAWADOGO",
+      "ministere": "Ministère de la Santé",
+      "fonction": "Directrice régionale",
+      "roles": ["agent", "chef_service"]
+    },
+    {
+      "username": "issa.compaore",
+      "prenom": "Issa",
+      "nom": "COMPAORÉ",
+      "ministere": "Ministère de la Santé",
+      "fonction": "Chargé d'études",
+      "roles": ["agent"]
+    },
+    {
+      "username": "mariam.traore",
+      "prenom": "Mariam",
+      "nom": "TRAORÉ",
+      "ministere": "Ministère de l'Éducation nationale",
+      "fonction": "Secrétaire générale",
+      "roles": ["agent", "chef_service"]
+    },
+    {
+      "username": "paul.zongo",
+      "prenom": "Paul",
+      "nom": "ZONGO",
+      "ministere": "Ministère de la Transition Digitale",
+      "fonction": "Ingénieur systèmes",
+      "roles": ["agent"]
+    }
+  ]
+}

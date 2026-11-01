@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block contenu %}
+<section class="carte">
+  <h1>Créer un salon classifié</h1>
+  <p>Le salon est chiffré de bout en bout (Megolm), accessible sur invitation uniquement. Les nouveaux
+     membres ne voient pas l'historique antérieur et les messages expirent automatiquement selon le niveau.</p>
+  <form method="post" action="/salons" class="grille">
+    <input type="hidden" name="csrf" value="{{ csrf }}">
+    <label>Nom du salon <input name="nom" required placeholder="Cellule de crise"></label>
+    <label>Niveau de classification
+      <select name="niveau">
+        {% for n, duree in niveaux.items() %}
+        <option value="{{ n }}">{{ n }}{% if duree %} — expiration {{ (duree // 86400000) }} jours{% endif %}</option>
+        {% endfor %}
+      </select>
+    </label>
+    <fieldset>
+      <legend>Membres</legend>
+      {% for a in agents %}
+      <label class="case">
+        <input type="checkbox" name="membres" value="{{ a.username }}"> {{ a.prenom }} {{ a.nom }}
+        <small>({{ a.ministere }})</small>
+        {% if 'chef_service' in a.roles %}
+        <span class="mod"><input type="checkbox" name="moderateurs" value="{{ a.username }}"> modérateur</span>
+        {% endif %}
+      </label>
+      {% endfor %}
+    </fieldset>
+    <button class="bouton">Créer le salon</button>
+  </form>
+</section>
+{% endblock %}

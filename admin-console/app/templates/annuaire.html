@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block contenu %}
+<h1>Annuaire officiel des agents</h1>
+
+<form method="get" class="filtre">
+  <label>Ministère
+    <select name="ministere" onchange="this.form.submit()">
+      <option value="">Tous les ministères</option>
+      {% for m in ministeres %}<option {% if m == ministere %}selected{% endif %}>{{ m }}</option>{% endfor %}
+    </select>
+  </label>
+</form>
+
+<table>
+  <thead>
+    <tr><th>Agent</th><th>Ministère</th><th>Fonction</th><th>Rôles</th><th>Statut</th><th>Révocation immédiate</th></tr>
+  </thead>
+  <tbody>
+  {% for a in agents %}
+    <tr class="{{ 'revoque' if a.statut != 'actif' }}">
+      <td><strong>{{ a.prenom }} {{ a.nom }}</strong><br><code>{{ a.username }}</code></td>
+      <td>{{ a.ministere }}</td>
+      <td>{{ a.fonction }}</td>
+      <td>{{ a.roles.replace(',', ', ') }}</td>
+      <td>
+        {% if a.statut == 'actif' %}<span class="pastille actif">actif</span>
+        {% else %}<span class="pastille revoque">révoqué</span><br><small>{{ a.revoque_le }} — {{ a.motif }}</small>{% endif %}
+      </td>
+      <td>
+        {% if a.statut == 'actif' and a.username != admin.username %}
+        <form method="post" action="/agents/{{ a.username }}/revoquer" class="revocation"
+              onsubmit="return confirm('Révoquer cet agent sur tous ses appareils ?')">
+          <input type="hidden" name="csrf" value="{{ csrf }}">
+          <select name="motif">{% for m in motifs %}<option>{{ m }}</option>{% endfor %}</select>
+          <button class="bouton rouge">Révoquer</button>
+        </form>
+        {% endif %}
+      </td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
