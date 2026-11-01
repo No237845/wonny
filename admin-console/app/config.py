@@ -4,7 +4,7 @@ import os
 from dataclasses import dataclass
 from pathlib import Path
 
-from scripts.init_secrets import read_env_file
+from scripts.init_secrets import public_urls, read_env_file
 
 
 @dataclass(frozen=True)
@@ -30,7 +30,7 @@ def load_settings() -> Settings:
         server_name=os.environ.get("SERVER_NAME", "kibare.local"),
         synapse_url=os.environ.get("SYNAPSE_INTERNAL_URL", "http://synapse:8008"),
         keycloak_internal_url=os.environ.get("KEYCLOAK_INTERNAL_URL", "http://keycloak:8080"),
-        keycloak_public_url=f"http://{host}:{os.environ.get('PORT_KEYCLOAK', '8180')}",
+        keycloak_public_url=public_urls(dict(os.environ))["KEYCLOAK_PUBLIC_URL"],
         console_public_url=f"http://{host}:{os.environ.get('PORT_CONSOLE', '8090')}",
         realm="mtdpce",
         client_id="kibare-console",

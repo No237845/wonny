@@ -1,6 +1,10 @@
 {
-	auto_https off
 	admin off
+	# Le tunnel de démonstration termine le HTTPS en amont : on fait confiance
+	# à ses en-têtes X-Forwarded-* (protocole, IP du client), sur ce port seulement.
+	servers :8000 {
+		trusted_proxies static private_ranges
+	}
 }
 
 (securite) {
@@ -10,6 +14,74 @@
 		Referrer-Policy no-referrer
 		-Server
 	}
+}
+
+# Configuration et identité visuelle d'Element, copiées par le service init.
+# Element demande d'abord config.<hôte>.json, puis config.json.
+(config_element) {
+	@config path_regexp ^/config(\.[^/]+)?\.json$
+	handle @config {
+		root * /rendered/element
+		rewrite * /config.json
+		file_server
+	}
+	# Logo, pages d'accueil, fond, thème.
+	@kibare path /kibare/*
+	handle @kibare {
+		root * /rendered/element
+		file_server
+	}
+	# Icônes et manifeste d'Element remplacés par ceux de Kibaré.
+	@favicon path /vector-icons/favicon*
+	handle @favicon {
+		root * /rendered/element/kibare
+		rewrite * /favicon.ico
+		file_server
+	}
+	@icones path /vector-icons/*
+	handle @icones {
+		root * /rendered/element/kibare
+		rewrite * /icone-512.png
+		file_server
+	}
+	@manifeste path /manifest.json
+	handle @manifeste {
+		root * /rendered/element/kibare
+		rewrite * /manifest.json
+		file_server
+	}
+}
+
+# Element, Synapse et Keycloak sur une seule origine, aiguillés par chemin.
+# Les API d'administration y sont bloquées et la console n'y est pas servie.
+(origine_unique) {
+	import securite
+	@admin path /_synapse/admin/* /admin/*
+	handle @admin {
+		respond 403
+	}
+	import config_element
+	@matrix path /_matrix/* /_synapse/*
+	handle @matrix {
+		reverse_proxy synapse:8008
+	}
+	@keycloak path /realms/* /resources/*
+	handle @keycloak {
+		reverse_proxy keycloak:8080
+	}
+	handle {
+		reverse_proxy element:80
+	}
+}
+
+# Point d'entrée HTTPS (PUBLIC_URL=https://PUBLIC_HOST). Le port 80 redirige
+# vers HTTPS. Certificat selon CADDY_TLS :
+#   internal                      autorité locale de Caddy (démonstration) ;
+#   /certs/kibare.crt /certs/kibare.key   certificat fourni (État) ;
+#   adresse@domaine               ACME, si le nom est joignable depuis l'autorité.
+https://{$PUBLIC_HOST:localhost} {
+	tls {$CADDY_TLS:internal}
+	import origine_unique
 }
 
 # API client Matrix. L'API d'administration n'est accessible qu'en interne
@@ -24,7 +96,10 @@ http://:8008 {
 # Client web Element
 http://:8080 {
 	import securite
-	reverse_proxy element:80
+	import config_element
+	handle {
+		reverse_proxy element:80
+	}
 }
 
 # Keycloak : seules les pages de connexion sont publiques.
@@ -39,4 +114,10 @@ http://:8180 {
 http://:8090 {
 	import securite
 	reverse_proxy console:8090
+}
+
+# Point d'entrée d'un tunnel HTTPS de démonstration (ngrok…), qui termine le
+# HTTPS lui-même (PUBLIC_URL=adresse du tunnel).
+http://:8000 {
+	import origine_unique
 }

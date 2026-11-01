@@ -3,7 +3,7 @@
 # ${...} sont remplacées par les paramètres de .env et les secrets générés.
 
 server_name: "${SERVER_NAME}"
-public_baseurl: "http://${PUBLIC_HOST}:${PORT_MATRIX}/"
+public_baseurl: "${MATRIX_PUBLIC_URL}/"
 pid_file: /data/homeserver.pid
 signing_key_path: /data/signing.key
 media_store_path: /data/media_store
@@ -56,9 +56,9 @@ oidc_providers:
     idp_name: "Identité de l'administration (MTDPCE)"
     # Le navigateur passe par l'URL publique ; Synapse parle à Keycloak
     # directement sur le réseau interne Docker.
-    issuer: "http://${PUBLIC_HOST}:${PORT_KEYCLOAK}/realms/mtdpce"
+    issuer: "${KEYCLOAK_PUBLIC_URL}/realms/mtdpce"
     discover: false
-    authorization_endpoint: "http://${PUBLIC_HOST}:${PORT_KEYCLOAK}/realms/mtdpce/protocol/openid-connect/auth"
+    authorization_endpoint: "${KEYCLOAK_PUBLIC_URL}/realms/mtdpce/protocol/openid-connect/auth"
     token_endpoint: "http://keycloak:8080/realms/mtdpce/protocol/openid-connect/token"
     userinfo_endpoint: "http://keycloak:8080/realms/mtdpce/protocol/openid-connect/userinfo"
     jwks_uri: "http://keycloak:8080/realms/mtdpce/protocol/openid-connect/certs"

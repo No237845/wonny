@@ -1,0 +1,13 @@
+{
+    "name": "Kibaré",
+    "short_name": "Kibaré",
+    "description": "La messagerie souveraine de l'administration",
+    "display": "standalone",
+    "theme_color": "#08801a",
+    "background_color": "#ffffff",
+    "start_url": "index.html",
+    "icons": [
+        { "src": "/kibare/icone-192.png", "sizes": "192x192", "type": "image/png" },
+        { "src": "/kibare/icone-512.png", "sizes": "512x512", "type": "image/png" }
+    ]
+}

@@ -1,0 +1,3 @@
+# Certificat et clé privée de l'État : jamais dans Git.
+*
+!.gitignore

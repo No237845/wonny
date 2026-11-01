@@ -1,0 +1,79 @@
+<style>
+    /* Page « Accueil » d'Element après connexion. Les variables --cpd-* sont
+       celles du thème actif (clair ou sombre) ; les valeurs de repli servent
+       quand la page est ouverte seule. */
+    .kb { --kb-texte: var(--cpd-color-text-primary, #15201a); --kb-texte-2: var(--cpd-color-text-secondary, #4d5e52);
+          --kb-surface: var(--cpd-color-bg-subtle-secondary, #f3f7f4); --kb-bord: var(--cpd-color-border-interactive-secondary, #d5e0d7);
+          --kb-accent: var(--cpd-color-text-action-accent, #08801a);
+          max-width: 860px; margin: 0 auto; padding: 32px 24px 48px; color: var(--kb-texte); text-align: left;
+          font-family: var(--cpd-font-family-sans, Inter, system-ui, "Segoe UI", sans-serif); }
+    .kb-tete { display: flex; align-items: center; gap: 18px; padding-bottom: 22px; margin-bottom: 26px; position: relative; }
+    .kb-tete::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 4px; border-radius: 2px;
+        background: linear-gradient(100deg, #e3120b 0 46%, #fdc703 46% 54%, #08801a 54%); }
+    .kb-tete img { width: 64px; height: auto; flex: none; }
+    .kb-tete h1 { margin: 0; font-size: 26px; line-height: 1.2; }
+    .kb-tete p { margin: 4px 0 0; color: var(--kb-texte-2); font-size: 15px; }
+    .kb h2 { font-size: 17px; margin: 30px 0 12px; }
+    .kb-cartes { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+    .kb-carte { background: var(--kb-surface); border: 1px solid var(--kb-bord); border-radius: 12px; padding: 16px 16px 14px; }
+    .kb-carte strong { display: block; font-size: 15px; margin-bottom: 6px; color: var(--kb-accent); }
+    .kb-carte p, .kb li, .kb td { font-size: 14px; line-height: 1.5; color: var(--kb-texte-2); margin: 0; }
+    .kb table { width: 100%; border-collapse: collapse; }
+    .kb th { text-align: left; font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--kb-texte-2);
+        padding: 0 10px 8px 0; font-weight: 600; }
+    .kb td { padding: 10px 10px 10px 0; border-top: 1px solid var(--kb-bord); vertical-align: top; }
+    .kb-niveau { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 12px; font-weight: 700;
+        letter-spacing: .03em; white-space: nowrap; }
+    .kb-np { background: #e4e9e5; color: #2c3a30; }
+    .kb-dr { background: #fdc703; color: #3a2d00; }
+    .kb-cf { background: #c40f0a; color: #fff; }
+    .kb ul { padding-left: 20px; margin: 0; display: grid; gap: 6px; }
+    .kb-note { margin-top: 30px; padding: 14px 16px; border-radius: 12px; border-left: 4px solid #e3120b;
+        background: var(--kb-surface); font-size: 14px; color: var(--kb-texte-2); }
+    .kb-note strong { color: var(--kb-texte); }
+</style>
+<div class="kb">
+    <header class="kb-tete">
+        <img src="/kibare/logo.png" alt="">
+        <div>
+            <h1>Bienvenue sur Kibaré</h1>
+            <p>La messagerie souveraine de l'administration : vos échanges de service restent chiffrés et sur les serveurs de l'État.</p>
+        </div>
+    </header>
+
+    <h2>Bien démarrer</h2>
+    <div class="kb-cartes">
+        <div class="kb-carte">
+            <strong>Écrire à un collègue</strong>
+            <p>Cliquez sur « + » à côté de « Personnes » et cherchez-le par son nom : l'annuaire ne contient que des agents enrôlés.</p>
+        </div>
+        <div class="kb-carte">
+            <strong>Sauvegarder vos clés</strong>
+            <p>Définissez une phrase de sécurité dans Paramètres › Sécurité. Sans elle, un nouvel appareil ne pourra pas relire l'historique.</p>
+        </div>
+        <div class="kb-carte">
+            <strong>Vérifier vos interlocuteurs</strong>
+            <p>Dans le profil d'un collègue, choisissez « Vérifier » pour confirmer que vous parlez bien à ses appareils.</p>
+        </div>
+    </div>
+
+    <h2>Niveaux de classification des salons</h2>
+    <table>
+        <thead><tr><th>Niveau</th><th>Messages</th><th>Nouveaux membres</th></tr></thead>
+        <tbody>
+            <tr><td><span class="kb-niveau kb-np">NON PROTÉGÉ</span></td><td>Conservés</td><td>Voient les messages depuis leur arrivée</td></tr>
+            <tr><td><span class="kb-niveau kb-dr">DIFFUSION RESTREINTE</span></td><td>Effacés après 30 jours</td><td>Voient les messages depuis leur arrivée</td></tr>
+            <tr><td><span class="kb-niveau kb-cf">CONFIDENTIEL</span></td><td>Effacés après 7 jours</td><td>Voient les messages depuis leur arrivée</td></tr>
+        </tbody>
+    </table>
+
+    <h2 id="regles">Règles d'usage</h2>
+    <ul>
+        <li>Kibaré est réservé aux échanges de service. Ne transférez pas son contenu vers une messagerie grand public.</li>
+        <li>Donnez aux salons des noms neutres : le nom d'un salon n'est pas chiffré.</li>
+        <li>Dans un salon classifié, seuls les modérateurs invitent de nouveaux membres.</li>
+    </ul>
+
+    <p class="kb-note"><strong>Téléphone perdu ou volé ?</strong> Prévenez immédiatement votre administrateur Kibaré (DGTD).
+        Il coupe votre accès sur tous vos appareils en un clic.</p>
+</div>

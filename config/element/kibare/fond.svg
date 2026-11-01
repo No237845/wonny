@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice">
+  <!-- Fond des écrans de connexion : vert profond, fine bande diagonale rouge / or / vert reprise du logo. -->
+  <defs>
+    <linearGradient id="nuit" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0e4a1c"/>
+      <stop offset="1" stop-color="#062611"/>
+    </linearGradient>
+    <radialGradient id="halo" cx="0.5" cy="0.4" r="0.6">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.10"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1920" height="1080" fill="url(#nuit)"/>
+  <rect width="1920" height="1080" fill="url(#halo)"/>
+  <path d="M0 820 L1920 440 L1920 464 L0 844 Z" fill="#e3120b"/>
+  <path d="M0 844 L1920 464 L1920 472 L0 852 Z" fill="#fdc703"/>
+  <path d="M0 852 L1920 472 L1920 496 L0 876 Z" fill="#11a133"/>
+</svg>

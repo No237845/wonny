@@ -14,7 +14,7 @@ from app.config import Settings
 from app.registry import Registry
 from app.services import AgentInput, EnrollmentError, Kibare
 from app.synapse import registration_mac
-from scripts.init_secrets import SECRET_NAMES, ensure_secrets, render
+from scripts.init_secrets import SECRET_NAMES, ensure_secrets, public_urls, render
 
 
 # --- Doubles de test pour Keycloak et Synapse -----------------------------------
@@ -150,6 +150,13 @@ def test_secrets_generes_une_seule_fois(tmp_path):
     assert set(SECRET_NAMES) <= set(premiers)
     assert len(set(premiers.values())) == len(SECRET_NAMES)  # tous différents
     assert ensure_secrets(fichier) == premiers  # conservés au redémarrage
+
+
+def test_adresses_publiques_locales_ou_tunnel():
+    local = public_urls({"PUBLIC_HOST": "localhost", "PORT_MATRIX": "8008", "PORT_KEYCLOAK": "8180"})
+    assert local == {"MATRIX_PUBLIC_URL": "http://localhost:8008", "KEYCLOAK_PUBLIC_URL": "http://localhost:8180"}
+    tunnel = public_urls({"PUBLIC_URL": "https://demo.example/", "PUBLIC_HOST": "localhost"})
+    assert set(tunnel.values()) == {"https://demo.example"}
 
 
 def test_modele_avec_variable_manquante_refuse():

@@ -23,7 +23,7 @@ TEMPLATES_DIR = Path(os.environ.get("KIBARE_TEMPLATES_DIR", "/templates"))
 RENDERED_DIR = Path(os.environ.get("KIBARE_RENDERED_DIR", "/rendered"))
 
 # Sous-dossiers de ./config utilisés par les conteneurs via le volume "rendered".
-RENDERED_SUBDIRS = ("synapse", "keycloak")
+RENDERED_SUBDIRS = ("synapse", "keycloak", "element")
 
 SECRET_NAMES = (
     "POSTGRES_PASSWORD",
@@ -51,6 +51,21 @@ def read_env_file(path: Path) -> dict[str, str]:
                 key, value = line.split("=", 1)
                 values[key.strip()] = value.strip()
     return values
+
+
+def public_urls(env: dict[str, str]) -> dict[str, str]:
+    """Adresses de Synapse et Keycloak vues par les navigateurs.
+
+    Sans PUBLIC_URL, chaque service a son port sur PUBLIC_HOST. Avec PUBLIC_URL
+    (tunnel HTTPS de démonstration), tous partagent cette seule origine et Caddy
+    aiguille les requêtes selon le chemin.
+    """
+    tunnel = env.get("PUBLIC_URL", "").strip().rstrip("/")
+    host = env.get("PUBLIC_HOST", "localhost")
+    return {
+        "MATRIX_PUBLIC_URL": tunnel or f"http://{host}:{env.get('PORT_MATRIX', '8008')}",
+        "KEYCLOAK_PUBLIC_URL": tunnel or f"http://{host}:{env.get('PORT_KEYCLOAK', '8180')}",
+    }
 
 
 def ensure_secrets(path: Path) -> dict[str, str]:
@@ -101,6 +116,7 @@ def render_tree(templates_dir: Path, rendered_dir: Path, variables: dict[str, st
 def main() -> int:
     variables = ensure_secrets(SECRETS_FILE)
     variables.update({name: os.environ[name] for name in PUBLIC_NAMES if name in os.environ})
+    variables.update(public_urls(dict(os.environ)))
     render_tree(TEMPLATES_DIR, RENDERED_DIR, variables)
     print("[init] Configuration prête.")
     return 0

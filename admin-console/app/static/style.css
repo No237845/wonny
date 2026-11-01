@@ -1,21 +1,28 @@
+/* Couleurs reprises du logo Kibaré. */
 :root {
-  --rouge: #c8102e;
-  --vert: #006a44;
-  --or: #fcd116;
-  --encre: #1d2433;
-  --gris: #f3f4f6;
-  --bord: #d8dbe2;
+  --rouge: #c40f0a;
+  --rouge-logo: #e3120b;
+  --vert: #08801a;
+  --vert-fonce: #066a15;
+  --nuit: #0b3d17;
+  --or: #fdc703;
+  --encre: #15201a;
+  --gris: #f3f7f4;
+  --bord: #d5e0d7;
+  --bande: linear-gradient(100deg, var(--rouge-logo) 0 46%, var(--or) 46% 54%, var(--vert) 54%);
 }
 * { box-sizing: border-box; }
 body { margin: 0; font-family: system-ui, sans-serif; color: var(--encre); background: #fff; }
-.bandeau { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1rem;
-  padding: .8rem 1.5rem; background: var(--vert); color: #fff; border-bottom: 6px solid var(--rouge); }
-.marque { font-weight: 700; font-size: 1.3rem; }
-.marque small { font-weight: 400; opacity: .85; margin-left: .4rem; font-size: .9rem; }
-.etoile { color: var(--or); }
-nav { display: flex; flex-wrap: wrap; gap: 1rem; }
-nav a { color: #fff; text-decoration: none; }
-nav a:hover { text-decoration: underline; }
+.bandeau { position: relative; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center;
+  gap: 1rem; padding: .7rem 1.5rem .9rem; background: var(--nuit); color: #fff; }
+.bandeau::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 5px; background: var(--bande); }
+.marque { display: flex; align-items: center; gap: .7rem; font-weight: 700; font-size: 1.3rem; }
+.marque img { width: 34px; height: auto; }
+.marque small { font-weight: 400; opacity: .8; font-size: .9rem; }
+nav { display: flex; flex-wrap: wrap; gap: .3rem; }
+nav a { color: #fff; text-decoration: none; padding: .35rem .7rem; border-radius: 999px; }
+nav a:hover { background: rgba(255, 255, 255, .12); }
+nav a:focus-visible { outline: 2px solid var(--or); outline-offset: 1px; }
 nav .discret { opacity: .75; }
 main { max-width: 1100px; margin: 0 auto; padding: 1.5rem 16px; }
 footer { text-align: center; font-size: .8rem; color: #667; padding: 2rem 16px; }
@@ -27,20 +34,26 @@ tr.revoque { opacity: .6; }
 .pastille { padding: .1rem .5rem; border-radius: 1rem; font-size: .8rem; color: #fff; }
 .pastille.actif { background: var(--vert); }
 .pastille.revoque { background: var(--rouge); }
-.bouton { display: inline-block; background: var(--vert); color: #fff; border: 0; border-radius: 4px;
-  padding: .5rem 1rem; cursor: pointer; text-decoration: none; font-size: .95rem; }
+.bouton { display: inline-block; background: var(--vert); color: #fff; border: 0; border-radius: 999px;
+  padding: .5rem 1.1rem; cursor: pointer; text-decoration: none; font-size: .95rem; font-weight: 600; }
+.bouton:hover { background: var(--vert-fonce); }
+.bouton:focus-visible { outline: 3px solid var(--or); outline-offset: 2px; }
 .bouton.rouge { background: var(--rouge); }
+.bouton.rouge:hover { background: #a00c08; }
 .revocation { display: flex; gap: .4rem; flex-wrap: wrap; }
-.carte { border: 1px solid var(--bord); border-radius: 6px; padding: 1.5rem; }
+.carte { position: relative; overflow: hidden; border: 1px solid var(--bord); border-radius: 12px; padding: 1.5rem; }
+.carte::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--bande); }
 .centre { max-width: 480px; margin: 3rem auto; text-align: center; }
+.centre .logo { width: 84px; height: auto; margin: .5rem auto 0; display: block; }
 .grille { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; }
 .grille label { display: flex; flex-direction: column; gap: .3rem; font-weight: 600; }
 .grille .case, fieldset .case { flex-direction: row; align-items: center; font-weight: 400; gap: .5rem; }
 fieldset { grid-column: 1 / -1; border: 1px solid var(--bord); border-radius: 6px; }
 fieldset .case { display: flex; padding: .2rem 0; }
 .mod { margin-left: auto; font-size: .85rem; }
-input, select { padding: .45rem; border: 1px solid var(--bord); border-radius: 4px; font: inherit; }
+input, select { padding: .45rem; border: 1px solid var(--bord); border-radius: 6px; font: inherit; }
+input:focus, select:focus { outline: 0; border-color: var(--vert); box-shadow: 0 0 0 3px rgba(8, 128, 26, .18); }
 .filtre { margin-bottom: 1rem; }
 .flash { padding: .8rem 1rem; border-radius: 4px; margin-bottom: 1rem; }
-.flash.succes { background: #e6f4ee; border-left: 4px solid var(--vert); }
+.flash.succes { background: #e8f3ea; border-left: 4px solid var(--vert); }
 .flash.erreur { background: #fbe9ec; border-left: 4px solid var(--rouge); }

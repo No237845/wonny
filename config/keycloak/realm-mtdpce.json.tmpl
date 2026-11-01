@@ -1,6 +1,17 @@
 {
   "realm": "mtdpce",
   "displayName": "Kibaré — Identité de l'administration",
+  "loginTheme": "kibare",
+  "browserSecurityHeaders": {
+    "contentSecurityPolicyReportOnly": "",
+    "xContentTypeOptions": "nosniff",
+    "referrerPolicy": "no-referrer",
+    "xRobotsTag": "none",
+    "xFrameOptions": "SAMEORIGIN",
+    "contentSecurityPolicy": "frame-src 'self'; frame-ancestors 'self'; object-src 'none';",
+    "xXSSProtection": "1; mode=block",
+    "strictTransportSecurity": "max-age=0"
+  },
   "enabled": true,
   "registrationAllowed": false,
   "resetPasswordAllowed": false,
@@ -42,7 +53,7 @@
       "directAccessGrantsEnabled": false,
       "implicitFlowEnabled": false,
       "serviceAccountsEnabled": false,
-      "redirectUris": ["http://${PUBLIC_HOST}:${PORT_MATRIX}/_synapse/client/oidc/callback"],
+      "redirectUris": ["${MATRIX_PUBLIC_URL}/_synapse/client/oidc/callback"],
       "webOrigins": [],
       "attributes": { "pkce.code.challenge.method": "S256" },
       "protocolMappers": [

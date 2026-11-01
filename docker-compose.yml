@@ -13,6 +13,7 @@ x-public-env: &public-env
   PORT_ELEMENT: ${PORT_ELEMENT:-8080}
   PORT_KEYCLOAK: ${PORT_KEYCLOAK:-8180}
   PORT_CONSOLE: ${PORT_CONSOLE:-8090}
+  PUBLIC_URL: ${PUBLIC_URL:-}
 
 services:
   # 1. Génère les secrets aléatoires (une seule fois) et produit les fichiers
@@ -59,6 +60,8 @@ services:
         export KC_BOOTSTRAP_ADMIN_PASSWORD=$$KEYCLOAK_ADMIN_PASSWORD &&
         mkdir -p /opt/keycloak/data/import &&
         cp /rendered/keycloak/realm-mtdpce.json /opt/keycloak/data/import/ &&
+        cp -r /rendered/keycloak/themes/. /opt/keycloak/themes/ &&
+        rm -rf /opt/keycloak/data/tmp/kc-gzip-cache &&
         exec /opt/keycloak/bin/kc.sh start --import-realm
     environment:
       KC_DB: postgres
@@ -66,7 +69,7 @@ services:
       KC_DB_USERNAME: keycloak
       KC_BOOTSTRAP_ADMIN_USERNAME: kc-bootstrap
       KC_HTTP_ENABLED: "true"
-      KC_HOSTNAME: http://${PUBLIC_HOST:-localhost}:${PORT_KEYCLOAK:-8180}
+      KC_HOSTNAME: ${PUBLIC_URL:-http://${PUBLIC_HOST:-localhost}:${PORT_KEYCLOAK:-8180}}
       KC_HOSTNAME_BACKCHANNEL_DYNAMIC: "true"
       KC_PROXY_HEADERS: xforwarded
       KC_HEALTH_ENABLED: "true"
@@ -109,8 +112,7 @@ services:
   # Client web (fork configuré d'Element).
   element:
     image: vectorim/element-web:v1.11.85
-    volumes:
-      - ./config/element/config.json:/app/config.json:ro
+    # Sa configuration (config.json) est générée par init et servie par Caddy.
     restart: unless-stopped
 
   # Console d'administration : enrôlement, révocation, salons classifiés.
@@ -131,14 +133,28 @@ services:
   # Point d'entrée unique ; bloque l'API d'administration Synapse côté public.
   proxy:
     image: caddy:2.8.4-alpine
+    environment:
+      PUBLIC_HOST: ${PUBLIC_HOST:-localhost}
+      CADDY_TLS: ${CADDY_TLS:-internal}
     ports:
+      # HTTPS : Element, Synapse et Keycloak sur https://PUBLIC_HOST ;
+      # le port 80 ne fait que rediriger vers HTTPS.
+      - "80:80"
+      - "443:443"
       - "${PORT_MATRIX:-8008}:8008"
       - "${PORT_ELEMENT:-8080}:8080"
       - "${PORT_KEYCLOAK:-8180}:8180"
       # La console n'est joignable que depuis la machine hôte.
       - "127.0.0.1:${PORT_CONSOLE:-8090}:8090"
+      # Point d'entrée d'un tunnel HTTPS de démonstration (voir PUBLIC_URL).
+      - "127.0.0.1:${PORT_TUNNEL:-8000}:8000"
     volumes:
       - ./config/caddy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - rendered:/rendered:ro
+      # Certificat fourni (CADDY_TLS=/certs/kibare.crt /certs/kibare.key).
+      - ./config/caddy/certs:/certs:ro
+      # Autorité locale et certificats gérés par Caddy.
+      - caddy_data:/data
     depends_on:
       - synapse
       - element
@@ -152,3 +168,4 @@ volumes:
   postgres_data:
   synapse_data:
   console_data:
+  caddy_data:

@@ -1,0 +1,128 @@
+{
+    "brand": "Kibaré",
+    "default_server_config": {
+        "m.homeserver": {
+            "base_url": "${MATRIX_PUBLIC_URL}",
+            "server_name": "${SERVER_NAME}"
+        }
+    },
+    "disable_custom_urls": true,
+    "disable_guests": true,
+    "disable_login_language_selector": false,
+    "disable_3pid_login": true,
+    "default_country_code": "BF",
+    "default_theme": "custom-Kibaré",
+    "room_directory": { "servers": ["${SERVER_NAME}"] },
+    "sso_redirect_options": { "immediate": false, "on_welcome_page": false },
+    "branding": {
+        "auth_header_logo_url": "kibare/logo.png",
+        "welcome_background_url": "kibare/fond.svg",
+        "auth_footer_links": [
+            { "text": "Règles d'usage", "url": "kibare/accueil.html#regles" }
+        ]
+    },
+    "embedded_pages": {
+        "welcome_url": "kibare/bienvenue.html",
+        "home_url": "kibare/accueil.html"
+    },
+    "show_labs_settings": false,
+    "integrations_ui_url": "",
+    "integrations_rest_url": "",
+    "integrations_widgets_urls": [],
+    "bug_report_endpoint_url": null,
+    "uisi_autorageshake_app": null,
+    "map_style_url": null,
+    "setting_defaults": {
+        "language": "fr",
+        "use_system_theme": false,
+        "custom_themes": [
+            {
+                "name": "Kibaré",
+                "is_dark": false,
+                "colors": {
+                    "accent-color": "#08801a",
+                    "primary-color": "#08801a",
+                    "warning-color": "#c40f0a",
+                    "sidebar-color": "#e4eee6",
+                    "roomlist-background-color": "#f3f7f4",
+                    "roomlist-text-color": "#15201a",
+                    "roomlist-text-secondary-color": "#4d5e52",
+                    "roomlist-highlights-color": "#dcebdf",
+                    "roomlist-separator-color": "#c9d9cd",
+                    "timeline-background-color": "#ffffff",
+                    "timeline-text-color": "#15201a",
+                    "secondary-content": "#4d5e52",
+                    "tertiary-content": "#6b7a6f",
+                    "timeline-text-secondary-color": "#4d5e52",
+                    "timeline-highlights-color": "#f1f7f2",
+                    "reaction-row-button-selected-bg-color": "#dcebdf",
+                    "username-colors": ["#08801a", "#c40f0a", "#8a6a00", "#0b6e6e", "#5b3fa8", "#b4451b", "#1f5fa8", "#7a2e6b"],
+                    "avatar-background-colors": ["#08801a", "#c40f0a", "#b38b00"]
+                },
+                "compound": {
+                    "--cpd-color-text-action-accent": "#08801a",
+                    "--cpd-color-icon-accent-primary": "#08801a",
+                    "--cpd-color-icon-accent-tertiary": "#08801a",
+                    "--cpd-color-bg-accent-rest": "#08801a",
+                    "--cpd-color-bg-accent-hovered": "#066a15",
+                    "--cpd-color-bg-accent-pressed": "#05561a",
+                    "--cpd-color-bg-action-primary-rest": "#08801a",
+                    "--cpd-color-bg-action-primary-hovered": "#066a15",
+                    "--cpd-color-bg-action-primary-pressed": "#05561a",
+                    "--cpd-color-border-focused": "#08801a"
+                }
+            },
+            {
+                "name": "Kibaré sombre",
+                "is_dark": true,
+                "colors": {
+                    "accent-color": "#4cc764",
+                    "primary-color": "#4cc764",
+                    "warning-color": "#ff6b61",
+                    "sidebar-color": "#061a0c",
+                    "roomlist-background-color": "#0b2613",
+                    "roomlist-text-color": "#dbe8de",
+                    "roomlist-text-secondary-color": "#9fb5a5",
+                    "roomlist-highlights-color": "#163a20",
+                    "roomlist-separator-color": "#2a4a32",
+                    "timeline-background-color": "#0e1d12",
+                    "timeline-text-color": "#eef5ef",
+                    "secondary-content": "#9fb5a5",
+                    "tertiary-content": "#7f9686",
+                    "timeline-text-secondary-color": "#9fb5a5",
+                    "timeline-highlights-color": "#132a19",
+                    "reaction-row-button-selected-bg-color": "#163a20",
+                    "username-colors": ["#4cc764", "#ff7a70", "#f5c84a", "#4fc9c9", "#a78bfa", "#ff9f5a", "#6fa8ff", "#e98ad6"],
+                    "avatar-background-colors": ["#1f9a38", "#d4302a", "#c99700"]
+                },
+                "compound": {
+                    "--cpd-color-text-action-accent": "#4cc764",
+                    "--cpd-color-icon-accent-primary": "#4cc764",
+                    "--cpd-color-icon-accent-tertiary": "#4cc764",
+                    "--cpd-color-bg-accent-rest": "#2fae4b",
+                    "--cpd-color-bg-accent-hovered": "#3dbd59",
+                    "--cpd-color-bg-accent-pressed": "#24923d",
+                    "--cpd-color-bg-action-primary-rest": "#4cc764",
+                    "--cpd-color-bg-action-primary-hovered": "#5fd476",
+                    "--cpd-color-bg-action-primary-pressed": "#3bb052",
+                    "--cpd-color-text-on-solid-primary": "#061a0c",
+                    "--cpd-color-border-focused": "#4cc764"
+                }
+            }
+        ],
+        "sendTypingNotifications": false,
+        "showTypingNotifications": false,
+        "urlPreviewsEnabled": false,
+        "urlPreviewsEnabled_e2ee": false,
+        "UIFeature.registration": false,
+        "UIFeature.passwordReset": false,
+        "UIFeature.identityServer": false,
+        "UIFeature.thirdPartyId": false,
+        "UIFeature.feedback": false,
+        "UIFeature.shareSocialMedia": false,
+        "UIFeature.widgets": false,
+        "UIFeature.voip": false,
+        "UIFeature.advancedSettings": false
+    },
+    "features": {}
+}
